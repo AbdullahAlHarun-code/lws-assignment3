@@ -1,39 +1,29 @@
 import SingleTaskAction from "./SingleTaskAction";
 import { FaStar } from "react-icons/fa";
 
-export default function SingleTask() {
+export default function SingleTask({ task }) {
   return (
     <tr className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
       <td>
-        <FaStar  color="grey"/>
+        <FaStar color="grey" />
       </td>
-      <td>Integration API</td>
+      <td>{task.title}</td>
       <td>
-        <div>
-          Connect an existing API to a third-party database using secure methods
-          and handle data exchange efficiently.
-        </div>
+        <div>{task.description}</div>
       </td>
       <td>
         <ul className="flex justify-center gap-1.5 flex-wrap">
-          <li>
-            <span className="inline-block h-5 whitespace-nowrap rounded-[45px] bg-[#00D991A1] px-2.5 text-sm capitalize text-[#F4F5F6]">
-              Web
-            </span>
-          </li>
-          <li>
-            <span className="inline-block h-5 whitespace-nowrap rounded-[45px] bg-[#1C92FFB0] px-2.5 text-sm capitalize text-[#F4F5F6]">
-              Python
-            </span>
-          </li>
-          <li>
-            <span className="inline-block h-5 whitespace-nowrap rounded-[45px] bg-[#FE1A1AB5] px-2.5 text-sm capitalize text-[#F4F5F6]">
-              API
-            </span>
-          </li>
+          {task.tags.map((tag) => (
+            <li>
+              <span className="inline-block h-5 whitespace-nowrap rounded-[45px] bg-[#00D991A1] px-2.5 text-sm capitalize text-[#F4F5F6]">
+                {tag}
+              </span>
+            </li>
+          ))}
+          
         </ul>
       </td>
-      <td className="text-center">High</td>
+      <td className="text-center">{task.priority}</td>
       <td>
         <SingleTaskAction />
       </td>

@@ -1,7 +1,17 @@
+import { useState } from "react";
 import TasksList from "./TasksList";
 import TasksManage from "./TasksManage";
 
 export default function TaskBoard() {
+    const defaultTask = {
+        'id':crypto.randomUUID(),
+        'title': 'New task',
+        'description': 'New task New task',
+        'priority':'High',
+        'tags':['python','javascript','Css'],
+        'isFavourite': false
+    }
+    const [tasks, setTasks] = useState([defaultTask])
   return (
     <section className="mb-20" id="tasks">
       <div className="container">
@@ -9,7 +19,7 @@ export default function TaskBoard() {
           
           <TasksManage />
 
-          <TasksList />
+          <TasksList tasks={tasks}/>
         </div>
       </div>
     </section>
