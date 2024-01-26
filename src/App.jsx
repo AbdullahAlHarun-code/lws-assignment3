@@ -5,12 +5,11 @@ import HeroSection from "./components/HeroSection";
 import TaskBoard from "./components/TaskBoard";
 
 function App() {
-
   return (
     <>
       <Header />
       <HeroSection />
-      <TaskBoard/>
+      <TaskBoard />
       <Footer />
     </>
   );
