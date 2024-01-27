@@ -1,10 +1,49 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TasksContext } from "../context";
 
 export default function TasksManage() {
-    const {showAddModel, setShowAddModel} = useContext(TasksContext)
-    console.log(showAddModel)
-   
+  const {
+    model, modelControll,
+    setFilteredTasks,
+    searchTerm,
+    setSearchTerm,
+    setIsDeleteAll,
+    setShowAlertModel,
+    showAddModel,
+    setShowAddModel,
+    tasks,
+    task,
+    setTask,
+    setIsAdd,
+    defaultTask,
+  } = useContext(TasksContext);
+
+  function handleAddTask() {
+    modelControll({
+        type:'ADD_EDIT_TASK_MODEL_OPEN',
+        payload:true
+    })
+    //setShowAddModel(!showAddModel);
+    //setIsAdd(true);
+    //setTask(...task,defaultTask)
+  }
+  function handleDeleteAll() {
+    setIsDeleteAll(true);
+    setShowAlertModel(true);
+  }
+  function handleSearchText(evt) {
+    evt.preventDefault();
+    setSearchTerm(evt.target.value);
+  }
+  function handleSearch(evt) {
+    evt.preventDefault();
+    const filtered = tasks.filter((t) =>
+      t.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredTasks([...filtered]);
+    setSearchTerm('')
+  }
+
   return (
     <div className="mb-14 items-center justify-between sm:flex">
       <h2 className="text-2xl font-semibold max-sm:mb-4">Your Tasks</h2>
@@ -14,13 +53,16 @@ export default function TasksManage() {
             <div className="relative overflow-hidden rounded-lg text-gray-50 md:min-w-[380px] lg:min-w-[440px]">
               <input
                 type="search"
+                name="search"
                 id="search-dropdown"
                 className="z-20 block w-full bg-gray-800 px-4 py-2 pr-10 focus:outline-none"
                 placeholder="Search Task"
+                onChange={handleSearchText}
                 required
               />
               <button
-                type="submit"
+                type="button"
+                onClick={handleSearch}
                 className="absolute right-2 top-0 h-full rounded-e-lg text-white md:right-4"
               >
                 <svg
@@ -43,10 +85,16 @@ export default function TasksManage() {
             </div>
           </div>
         </form>
-        <button onClick={()=>setShowAddModel(!showAddModel)} className="rounded-md bg-blue-500 px-3.5 py-2.5 text-sm font-semibold">
+        <button
+          onClick={handleAddTask}
+          className="rounded-md bg-blue-500 px-3.5 py-2.5 text-sm font-semibold"
+        >
           Add Task
         </button>
-        <button className="rounded-md bg-red-500 px-3.5 py-2.5 text-sm font-semibold">
+        <button
+          onClick={handleDeleteAll}
+          className="rounded-md bg-red-500 px-3.5 py-2.5 text-sm font-semibold"
+        >
           Delete All
         </button>
       </div>

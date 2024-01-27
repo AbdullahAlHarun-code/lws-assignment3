@@ -44,7 +44,7 @@ export default function SingleTask({ task }) {
       </td>
       <td className="text-center">{task.priority}</td>
       <td>
-        <SingleTaskAction />
+        <SingleTaskAction currentTask={task}/>
       </td>
     </tr>
   );
