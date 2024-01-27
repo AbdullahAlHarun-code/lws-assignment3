@@ -2,12 +2,20 @@ import { useContext, useState } from "react";
 import { TasksContext } from "../context";
 
 export default function AddTaskModal() {
-  
-  const { model, modelControll, setSearchTerm, blankTask, task, setTask } = useContext(TasksContext);
+  const {
+    model,
+    modelControll,
+    taskObj,
+    taskControll,
+    setSearchTerm,
+    blankTask,
+    task,
+    setTask,
+  } = useContext(TasksContext);
   const { showAddModel, setShowAddModel } = useContext(TasksContext);
   const { tasks, setTasks } = useContext(TasksContext);
-  const {isAdd, setIsAdd} = useContext(TasksContext);
-  
+  const { isAdd, setIsAdd } = useContext(TasksContext);
+
   const handleChange = (evt) => {
     const name = evt.target.name;
     let value = evt.target.value;
@@ -21,38 +29,43 @@ export default function AddTaskModal() {
   };
   function handleShowModel() {
     modelControll({
-      type:'ADD_EDIT_TASK_MODEL_CLOSE',
-      payload:false
-  })
+      type: "ADD_EDIT_TASK_MODEL_CLOSE",
+      payload: false,
+    });
   }
   function handleAddEditTask(e) {
     e.preventDefault();
-    const newTask = task
+    const newTask = task;
     if (model.isAdd) {
-      setTasks([...tasks, newTask]);
+      taskControll({
+        type: "ADD_TASK",
+        payload: {
+          newtask: newTask,
+        },
+      });
     } else {
-      setTasks(
-        tasks.map((itemTask) => {
-          if (itemTask.id === newTask.id) {
-            return newTask;
-          }
-          return itemTask;
-        })
-      );
+      taskControll({
+        type: "UPDATE_TASK",
+        payload: {
+          newtask: newTask,
+        },
+      });
     }
 
     modelControll({
-      type:'ADD_EDIT_TASK_MODEL_CLOSE',
-      payload:false
-  })
+      type: "ADD_EDIT_TASK_MODEL_CLOSE",
+      payload: false,
+    });
     setTask(blankTask);
   }
-  
+
   return (
     <>
       <div className="bg-black bg-opacity-70 h-full w-full z-10 absolute top-0 left-0"></div>
       <form className="mx-auto my-10 w-1/2 max-w-[740px] rounded-xl border border-[#FEFBFB]/[36%] bg-[#191D26] p-9 max-md:px-4 lg:my-20 lg:p-11 z-10 absolute top-1/3 left-1/4">
-        <h2 className="mb-9 text-center text-2xl font-bold text-white lg:mb-11 lg:text-[28px]">{model.isAdd ? 'Create New Task':'Edit Task'}</h2>
+        <h2 className="mb-9 text-center text-2xl font-bold text-white lg:mb-11 lg:text-[28px]">
+          {model.isAdd ? "Create New Task" : "Edit Task"}
+        </h2>
 
         <div className="space-y-9 text-white lg:space-y-10">
           <div className="space-y-2 lg:space-y-3">
@@ -126,7 +139,7 @@ export default function AddTaskModal() {
             className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
             onClick={handleAddEditTask}
           >
-            {model.isAdd ? 'Create New Task':'Save'}
+            {model.isAdd ? "Create New Task" : "Save"}
           </button>
         </div>
       </form>

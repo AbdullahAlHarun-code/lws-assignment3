@@ -3,33 +3,31 @@ import { TasksContext } from "../context";
 
 export default function TasksManage() {
   const {
-    model, modelControll,
+    modelControll,
     setFilteredTasks,
     searchTerm,
     setSearchTerm,
-    setIsDeleteAll,
-    setShowAlertModel,
-    showAddModel,
-    setShowAddModel,
-    tasks,
-    task,
-    setTask,
-    setIsAdd,
-    defaultTask,
+    taskObj,
+    taskControll
   } = useContext(TasksContext);
 
   function handleAddTask() {
     modelControll({
-        type:'ADD_EDIT_TASK_MODEL_OPEN',
-        payload:true
+        type:'ADD_TASK_MODEL_OPEN',
+        payload:{
+            visible:true,
+            add_mode:true
+        }
     })
-    //setShowAddModel(!showAddModel);
-    //setIsAdd(true);
-    //setTask(...task,defaultTask)
   }
   function handleDeleteAll() {
-    setIsDeleteAll(true);
-    setShowAlertModel(true);
+    modelControll({
+        type: "ALERT_MODEL_OPEN",
+        payload: {
+          visible: true,
+          all_delete_mode: true,
+        },
+      });
   }
   function handleSearchText(evt) {
     evt.preventDefault();
@@ -37,9 +35,12 @@ export default function TasksManage() {
   }
   function handleSearch(evt) {
     evt.preventDefault();
-    const filtered = tasks.filter((t) =>
+    const filtered = taskObj.allTasks.filter((t) =>
       t.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    taskControll({
+
+    })
     setFilteredTasks([...filtered]);
     setSearchTerm('')
   }

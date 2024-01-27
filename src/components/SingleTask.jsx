@@ -4,27 +4,21 @@ import { useContext } from "react";
 import { TasksContext } from "../context";
 
 export default function SingleTask({ task }) {
-  const { tasks, setTasks } = useContext(TasksContext);
-  function handdleFavourite(taskId) {
-    setTasks(
-      tasks.map((t) => {
-        if (t.id === taskId) {
-          console.log(taskId);
-          return { ...t, isFavourite: !t.isFavourite };
-        } else {
-          return t;
-        }
-      })
-    );
+  const { tasks, setTasks, taskControll } = useContext(TasksContext);
+  function handdleFavourite() {
+    taskControll({
+      type: "TOOGLE_FAVOURITE",
+      payload: { id: task.id },
+    });
   }
 
   return (
     <tr className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
       <td>
         {task.isFavourite ? (
-          <FaStar color="yellow" onClick={() => handdleFavourite(task.id)} />
+          <FaStar color="yellow" onClick={handdleFavourite} />
         ) : (
-          <FaStar color="grey" onClick={() => handdleFavourite(task.id)} />
+          <FaStar color="grey" onClick={handdleFavourite} />
         )}
       </td>
       <td>{task.title}</td>
@@ -44,7 +38,7 @@ export default function SingleTask({ task }) {
       </td>
       <td className="text-center">{task.priority}</td>
       <td>
-        <SingleTaskAction currentTask={task}/>
+        <SingleTaskAction currentTask={task} />
       </td>
     </tr>
   );

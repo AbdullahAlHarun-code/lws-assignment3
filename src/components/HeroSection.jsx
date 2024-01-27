@@ -1,4 +1,4 @@
-import frame from '../assets/images/frame.png';
+import frame from "../assets/images/frame.png";
 
 export default function HeroSection() {
   return (

@@ -5,6 +5,7 @@ import { TasksContext } from "../context";
 import AddTaskModal from "./AddTaskModel";
 import AlertMessage from "./AlertMessage";
 import { ModelReducer, initialModel } from "../reducers/modelRedecer";
+import { TaskReducer, initialTask } from "../reducers/taskReducer";
 
 export default function TaskBoard() {
   const defaultTask = {
@@ -34,22 +35,19 @@ export default function TaskBoard() {
   const [searchTerm, setSearchTerm] = useState('');
   // ------------
   const [model, modelControll] = useReducer(ModelReducer, initialModel)
+  const [taskObj, taskControll] = useReducer(TaskReducer, initialTask)
   return (
     <>
       <TasksContext.Provider value={{ 
         model, modelControll,
+        taskObj, taskControll,
         filteredTasks , setFilteredTasks,
         searchTerm, setSearchTerm, 
-        isDeleteAll, setIsDeleteAll, 
-        showAlertModel, setShowAlertModel, 
         blankTask, 
-        tasks, setTasks, 
-        showAddModel, setShowAddModel,
-        task, setTask,
-        isAdd, setIsAdd }}>
+        task, setTask, }}>
         <section className="mb-20" id="tasks">
             {model.showAddEditModel && <AddTaskModal /> }
-            {showAlertModel && <AlertMessage /> }
+            {model.showAlertModel && <AlertMessage /> }
           <div className="container">
             <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
               <TasksManage defaultTask={task}/>
