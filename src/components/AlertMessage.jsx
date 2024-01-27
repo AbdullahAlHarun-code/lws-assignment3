@@ -5,14 +5,10 @@ export default function AlertMessage() {
   const {
     model,
     modelControll,
-    taskObj, 
     taskControll,
-    isDeleteAll,
-    setIsDeleteAll,
-    showAlertModel,
-    setShowAlertModel,
+    
   } = useContext(TasksContext);
-  const { blankTask, tasks, setTasks, task, setTask } =
+  const { blankTask, task, setTask } =
     useContext(TasksContext);
   function closeModel(e) {
     e.preventDefault();
@@ -46,7 +42,6 @@ export default function AlertMessage() {
   }
   function handleDeleteAllClick(e) {
     e.preventDefault();
-    setTasks([...tasks]);
     taskControll({
       type: "DELETE_ALL_TASKS",
       
